@@ -52,17 +52,47 @@ export const WOOL_COLORS = [
 ]
 
 
-export function initBot(username) {
+export function initBot(username, serverConfig) {
+    // Use provided serverConfig or fall back to global settings
+    const host = serverConfig?.host || settings.host;
+    const port = serverConfig?.port || settings.port;
+    const auth = serverConfig?.auth || settings.auth;
+    
     const options = {
         username: username,
-        host: settings.host,
-        port: settings.port,
-        auth: settings.auth,
+        host: host,
+        port: port,
+        auth: auth,
         version: mc_version,
     }
+
+    // If a Microsoft auth token was provided, attach it to the options in several ways to maximize compatibility
+    if (serverConfig?.authToken) {
+        try {
+            options.accessToken = serverConfig.authToken;
+            options.session = { accessToken: serverConfig.authToken };
+            // If profile info is available (id/name), attach it so Mineflayer can reuse the profile
+            if (serverConfig.authProfile && serverConfig.authProfile.id) {
+                options.session.selectedProfile = {
+                    id: serverConfig.authProfile.id,
+                    name: serverConfig.authProfile.name
+                };
+                // If available, set username to profile name to match the token
+                if (!options.username || options.username === 'Player') options.username = serverConfig.authProfile.name;
+            }
+            // Keep auth string set to microsoft for mineflayer
+            options.auth = 'microsoft';
+            console.log('[initBot] Using provided Microsoft auth token for bot:', username);
+        } catch (err) {
+            console.warn('[initBot] Failed to attach auth token to options', err);
+        }
+    }
+
     if (!mc_version || mc_version === "auto") {
         delete options.version;
     }
+
+    console.log(`[initBot] Creating bot "${username}" for ${host}:${port} with auth: ${options.auth}`);
 
     const bot = createBot(options);
     bot.loadPlugin(pathfinder);

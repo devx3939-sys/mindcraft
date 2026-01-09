@@ -1,0 +1,850 @@
+{
+  "id": "87c0ca2be322b27e559e67caccfe7ec0",
+  "timestamp": 1767923882787,
+  "fitness": 0,
+  "session": {
+    "actions": [
+      {
+        "type": "training_stage",
+        "data": {
+          "stage": "sustain"
+        },
+        "time": 1767922982775
+      },
+      {
+        "type": "training_action",
+        "data": {
+          "stage": "sustain",
+          "success": true
+        },
+        "time": 1767922982775
+      },
+      {
+        "type": "training_stage",
+        "data": {
+          "stage": "wood_stone"
+        },
+        "time": 1767923012777
+      },
+      {
+        "type": "training_action",
+        "data": {
+          "stage": "wood_stone",
+          "success": false
+        },
+        "time": 1767923013774
+      },
+      {
+        "type": "player_joined",
+        "data": {
+          "username": "Bot6"
+        },
+        "time": 1767923035143
+      },
+      {
+        "type": "training_stage",
+        "data": {
+          "stage": "wood_stone"
+        },
+        "time": 1767923045832
+      },
+      {
+        "type": "training_action",
+        "data": {
+          "stage": "wood_stone",
+          "success": false
+        },
+        "time": 1767923072392
+      },
+      {
+        "type": "training_stage",
+        "data": {
+          "stage": "wood_stone"
+        },
+        "time": 1767923104400
+      },
+      {
+        "type": "training_action",
+        "data": {
+          "stage": "wood_stone",
+          "success": false
+        },
+        "time": 1767923134029
+      },
+      {
+        "type": "training_stage",
+        "data": {
+          "stage": "wood_stone"
+        },
+        "time": 1767923166069
+      },
+      {
+        "type": "training_action",
+        "data": {
+          "stage": "wood_stone",
+          "success": false
+        },
+        "time": 1767923168549
+      },
+      {
+        "type": "training_stage",
+        "data": {
+          "stage": "wood_stone"
+        },
+        "time": 1767923200564
+      },
+      {
+        "type": "training_action",
+        "data": {
+          "stage": "wood_stone",
+          "success": false
+        },
+        "time": 1767923204732
+      },
+      {
+        "type": "training_stage",
+        "data": {
+          "stage": "wood_stone"
+        },
+        "time": 1767923236903
+      },
+      {
+        "type": "training_action",
+        "data": {
+          "stage": "wood_stone",
+          "success": false
+        },
+        "time": 1767923245382
+      },
+      {
+        "type": "training_stage",
+        "data": {
+          "stage": "wood_stone"
+        },
+        "time": 1767923277396
+      },
+      {
+        "type": "training_action",
+        "data": {
+          "stage": "wood_stone",
+          "success": false
+        },
+        "time": 1767923277411
+      },
+      {
+        "type": "training_stage",
+        "data": {
+          "stage": "wood_stone"
+        },
+        "time": 1767923309435
+      },
+      {
+        "type": "training_action",
+        "data": {
+          "stage": "wood_stone",
+          "success": false
+        },
+        "time": 1767923309465
+      },
+      {
+        "type": "training_stage",
+        "data": {
+          "stage": "wood_stone"
+        },
+        "time": 1767923341475
+      },
+      {
+        "type": "training_action",
+        "data": {
+          "stage": "wood_stone",
+          "success": false
+        },
+        "time": 1767923341512
+      },
+      {
+        "type": "spawn",
+        "data": {
+          "position": {
+            "x": 51.5,
+            "y": 72,
+            "z": 76.5
+          },
+          "dimension": "overworld"
+        },
+        "time": 1767923367726
+      },
+      {
+        "type": "training_stage",
+        "data": {
+          "stage": "wood_stone"
+        },
+        "time": 1767923373528
+      },
+      {
+        "type": "training_action",
+        "data": {
+          "stage": "wood_stone",
+          "success": false
+        },
+        "time": 1767923373552
+      },
+      {
+        "type": "training_stage",
+        "data": {
+          "stage": "wood_stone"
+        },
+        "time": 1767923405577
+      },
+      {
+        "type": "training_action",
+        "data": {
+          "stage": "wood_stone",
+          "success": false
+        },
+        "time": 1767923405597
+      },
+      {
+        "type": "training_stage",
+        "data": {
+          "stage": "wood_stone"
+        },
+        "time": 1767923437616
+      },
+      {
+        "type": "training_action",
+        "data": {
+          "stage": "wood_stone",
+          "success": false
+        },
+        "time": 1767923437652
+      },
+      {
+        "type": "training_stage",
+        "data": {
+          "stage": "wood_stone"
+        },
+        "time": 1767923469679
+      },
+      {
+        "type": "training_action",
+        "data": {
+          "stage": "wood_stone",
+          "success": false
+        },
+        "time": 1767923469699
+      },
+      {
+        "type": "training_stage",
+        "data": {
+          "stage": "wood_stone"
+        },
+        "time": 1767923501715
+      },
+      {
+        "type": "training_action",
+        "data": {
+          "stage": "wood_stone",
+          "success": false
+        },
+        "time": 1767923501742
+      },
+      {
+        "type": "training_stage",
+        "data": {
+          "stage": "wood_stone"
+        },
+        "time": 1767923533750
+      },
+      {
+        "type": "training_action",
+        "data": {
+          "stage": "wood_stone",
+          "success": false
+        },
+        "time": 1767923533785
+      },
+      {
+        "type": "training_stage",
+        "data": {
+          "stage": "wood_stone"
+        },
+        "time": 1767923565792
+      },
+      {
+        "type": "training_action",
+        "data": {
+          "stage": "wood_stone",
+          "success": false
+        },
+        "time": 1767923565836
+      },
+      {
+        "type": "training_stage",
+        "data": {
+          "stage": "wood_stone"
+        },
+        "time": 1767923597859
+      },
+      {
+        "type": "training_action",
+        "data": {
+          "stage": "wood_stone",
+          "success": false
+        },
+        "time": 1767923597911
+      },
+      {
+        "type": "training_stage",
+        "data": {
+          "stage": "wood_stone"
+        },
+        "time": 1767923629937
+      },
+      {
+        "type": "training_action",
+        "data": {
+          "stage": "wood_stone",
+          "success": false
+        },
+        "time": 1767923629967
+      },
+      {
+        "type": "training_stage",
+        "data": {
+          "stage": "wood_stone"
+        },
+        "time": 1767923661986
+      },
+      {
+        "type": "training_action",
+        "data": {
+          "stage": "wood_stone",
+          "success": false
+        },
+        "time": 1767923662026
+      },
+      {
+        "type": "spawn",
+        "data": {
+          "position": {
+            "x": 57.5,
+            "y": 74,
+            "z": 90.5
+          },
+          "dimension": "overworld"
+        },
+        "time": 1767923677833
+      },
+      {
+        "type": "training_stage",
+        "data": {
+          "stage": "wood_stone"
+        },
+        "time": 1767923694047
+      },
+      {
+        "type": "training_action",
+        "data": {
+          "stage": "wood_stone",
+          "success": false
+        },
+        "time": 1767923694089
+      },
+      {
+        "type": "spawn",
+        "data": {
+          "position": {
+            "x": 53.5,
+            "y": 73,
+            "z": 76.5
+          },
+          "dimension": "overworld"
+        },
+        "time": 1767923712944
+      },
+      {
+        "type": "training_stage",
+        "data": {
+          "stage": "wood_stone"
+        },
+        "time": 1767923726103
+      },
+      {
+        "type": "training_action",
+        "data": {
+          "stage": "wood_stone",
+          "success": false
+        },
+        "time": 1767923726120
+      },
+      {
+        "type": "training_stage",
+        "data": {
+          "stage": "wood_stone"
+        },
+        "time": 1767923758138
+      },
+      {
+        "type": "training_action",
+        "data": {
+          "stage": "wood_stone",
+          "success": false
+        },
+        "time": 1767923758160
+      },
+      {
+        "type": "training_stage",
+        "data": {
+          "stage": "wood_stone"
+        },
+        "time": 1767923790171
+      },
+      {
+        "type": "training_action",
+        "data": {
+          "stage": "wood_stone",
+          "success": false
+        },
+        "time": 1767923790193
+      },
+      {
+        "type": "training_stage",
+        "data": {
+          "stage": "wood_stone"
+        },
+        "time": 1767923822198
+      },
+      {
+        "type": "training_action",
+        "data": {
+          "stage": "wood_stone",
+          "success": false
+        },
+        "time": 1767923822249
+      },
+      {
+        "type": "spawn",
+        "data": {
+          "position": {
+            "x": 51.5,
+            "y": 78,
+            "z": 85.5
+          },
+          "dimension": "overworld"
+        },
+        "time": 1767923830309
+      },
+      {
+        "type": "training_stage",
+        "data": {
+          "stage": "wood_stone"
+        },
+        "time": 1767923854271
+      },
+      {
+        "type": "training_action",
+        "data": {
+          "stage": "wood_stone",
+          "success": false
+        },
+        "time": 1767923854302
+      }
+    ],
+    "stateSnapshots": [
+      {
+        "time": 1767923042776,
+        "health": 20,
+        "food": 17,
+        "position": {
+          "x": 40.48961349133143,
+          "y": 73,
+          "z": 76.5
+        },
+        "dimension": "overworld",
+        "inventory": [
+          {
+            "name": "oak_log",
+            "count": 14
+          },
+          {
+            "name": "apple",
+            "count": 1
+          },
+          {
+            "name": "dirt",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "time": 1767923102779,
+        "health": 20,
+        "food": 16,
+        "position": {
+          "x": 39.5,
+          "y": 74.96636799395752,
+          "z": 71.5
+        },
+        "dimension": "overworld",
+        "inventory": [
+          {
+            "name": "oak_log",
+            "count": 20
+          },
+          {
+            "name": "dirt",
+            "count": 2
+          }
+        ]
+      },
+      {
+        "time": 1767923162781,
+        "health": 20,
+        "food": 20,
+        "position": {
+          "x": 32.48697701754592,
+          "y": 74,
+          "z": 67.5
+        },
+        "dimension": "overworld",
+        "inventory": [
+          {
+            "name": "oak_log",
+            "count": 22
+          },
+          {
+            "name": "oak_sapling",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "time": 1767923222885,
+        "health": 20,
+        "food": 20,
+        "position": {
+          "x": 32.225853199999996,
+          "y": 71.3415999853611,
+          "z": 63.500000000000064
+        },
+        "dimension": "overworld",
+        "inventory": [
+          {
+            "name": "oak_log",
+            "count": 30
+          },
+          {
+            "name": "oak_sapling",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "time": 1767923282889,
+        "health": 20,
+        "food": 20,
+        "position": {
+          "x": 36.309134795999384,
+          "y": 72,
+          "z": 62.499999999999886
+        },
+        "dimension": "overworld",
+        "inventory": [
+          {
+            "name": "oak_log",
+            "count": 32
+          },
+          {
+            "name": "oak_sapling",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "time": 1767923342890,
+        "health": 20,
+        "food": 20,
+        "position": {
+          "x": 36.309134795999384,
+          "y": 72,
+          "z": 62.499999999999886
+        },
+        "dimension": "overworld",
+        "inventory": [
+          {
+            "name": "oak_log",
+            "count": 32
+          },
+          {
+            "name": "oak_sapling",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "time": 1767923367726,
+        "health": 20,
+        "food": 20,
+        "position": {
+          "x": 51.5,
+          "y": 72,
+          "z": 76.5
+        },
+        "dimension": "overworld",
+        "inventory": [
+          {
+            "name": "oak_log",
+            "count": 32
+          },
+          {
+            "name": "oak_sapling",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "time": 1767923402898,
+        "health": 20,
+        "food": 20,
+        "position": {
+          "x": 51.5,
+          "y": 72,
+          "z": 76.5
+        },
+        "dimension": "overworld",
+        "inventory": [
+          {
+            "name": "oak_log",
+            "count": 32
+          },
+          {
+            "name": "oak_sapling",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "time": 1767923462899,
+        "health": 20,
+        "food": 20,
+        "position": {
+          "x": 51.5,
+          "y": 72,
+          "z": 76.5
+        },
+        "dimension": "overworld",
+        "inventory": [
+          {
+            "name": "oak_log",
+            "count": 32
+          },
+          {
+            "name": "oak_sapling",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "time": 1767923522910,
+        "health": 20,
+        "food": 20,
+        "position": {
+          "x": 51.5,
+          "y": 72,
+          "z": 76.5
+        },
+        "dimension": "overworld",
+        "inventory": [
+          {
+            "name": "oak_log",
+            "count": 32
+          },
+          {
+            "name": "oak_sapling",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "time": 1767923582911,
+        "health": 20,
+        "food": 20,
+        "position": {
+          "x": 51.5,
+          "y": 72,
+          "z": 76.5
+        },
+        "dimension": "overworld",
+        "inventory": [
+          {
+            "name": "oak_log",
+            "count": 32
+          },
+          {
+            "name": "oak_sapling",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "time": 1767923642919,
+        "health": 17.166664123535156,
+        "food": 17,
+        "position": {
+          "x": 51.7,
+          "y": 72,
+          "z": 76.5
+        },
+        "dimension": "overworld",
+        "inventory": [
+          {
+            "name": "oak_log",
+            "count": 32
+          },
+          {
+            "name": "oak_sapling",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "time": 1767923677833,
+        "health": 20,
+        "food": 20,
+        "position": {
+          "x": 57.5,
+          "y": 74,
+          "z": 90.5
+        },
+        "dimension": "overworld",
+        "inventory": [
+          {
+            "name": "oak_log",
+            "count": 32
+          },
+          {
+            "name": "oak_sapling",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "time": 1767923702928,
+        "health": 11.333332061767578,
+        "food": 17,
+        "position": {
+          "x": 59.28383824549596,
+          "y": 74,
+          "z": 92.05834850074281
+        },
+        "dimension": "overworld",
+        "inventory": [
+          {
+            "name": "oak_log",
+            "count": 32
+          },
+          {
+            "name": "oak_sapling",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "time": 1767923712944,
+        "health": 20,
+        "food": 20,
+        "position": {
+          "x": 53.5,
+          "y": 73,
+          "z": 76.5
+        },
+        "dimension": "overworld",
+        "inventory": [
+          {
+            "name": "oak_log",
+            "count": 32
+          },
+          {
+            "name": "oak_sapling",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "time": 1767923762933,
+        "health": 16.333332061767578,
+        "food": 17,
+        "position": {
+          "x": 53.5,
+          "y": 71,
+          "z": 73.4045344029173
+        },
+        "dimension": "overworld",
+        "inventory": [
+          {
+            "name": "oak_log",
+            "count": 32
+          },
+          {
+            "name": "oak_sapling",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "time": 1767923822947,
+        "health": 7.333332061767578,
+        "food": 17,
+        "position": {
+          "x": 53.7,
+          "y": 71,
+          "z": 73.41928440291731
+        },
+        "dimension": "overworld",
+        "inventory": [
+          {
+            "name": "oak_log",
+            "count": 32
+          },
+          {
+            "name": "oak_sapling",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "time": 1767923830309,
+        "health": 20,
+        "food": 20,
+        "position": {
+          "x": 51.5,
+          "y": 78,
+          "z": 85.5
+        },
+        "dimension": "overworld",
+        "inventory": [
+          {
+            "name": "oak_log",
+            "count": 32
+          },
+          {
+            "name": "oak_sapling",
+            "count": 1
+          }
+        ]
+      }
+    ]
+  },
+  "brain": {
+    "weights": {
+      "train:patrol": 0.000028090507631320287,
+      "train:hunt_animals": 0.0008953642045503528,
+      "train:smelt": 0.00013923308023486302,
+      "train:mine_stone": 0.00041396671199271927,
+      "train:fish": 0.00014463854743148344,
+      "train:collect_wood": 0.001027982848390174,
+      "train_stage:sustain": 0.500704820233766,
+      "train_stage:wood_stone": 0.18746056415790402
+    }
+  }
+}

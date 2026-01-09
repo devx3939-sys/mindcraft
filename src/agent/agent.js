@@ -14,6 +14,7 @@ import { handleTranslation, handleEnglishTranslation } from '../utils/translator
 import { addBrowserViewer } from './vision/browser_viewer.js';
 import { serverProxy, sendOutputToServer } from './mindserver_proxy.js';
 import settings from './settings.js';
+import { defendSelf } from './library/skills.js';
 import { Task } from './tasks/tasks.js';
 import { speak } from './speak.js';
 import { log, validateNameFormat, handleDisconnection } from './connection_handler.js';
@@ -63,7 +64,15 @@ export class Agent {
         blacklistCommands(this.blocked_actions);
 
         console.log(this.name, 'logging into minecraft...');
-        this.bot = initBot(this.name);
+        
+        // Create serverConfig from current settings
+        const serverConfig = {
+            host: settings.host,
+            port: settings.port,
+            auth: settings.auth
+        };
+        
+        this.bot = initBot(this.name, serverConfig);
         
         // Connection Handler
         const onDisconnect = (event, reason) => {
@@ -109,9 +118,24 @@ export class Agent {
         this.bot.once('spawn', async () => {
             try {
                 clearTimeout(spawnTimeout);
-                addBrowserViewer(this.bot, count_id);
-                console.log('Initializing vision intepreter...');
-                this.vision_interpreter = new VisionInterpreter(this, settings.allow_vision);
+                try {
+                    await addBrowserViewer(this.bot, count_id);
+                    console.log('Initializing vision intepreter...');
+                    this.vision_interpreter = new VisionInterpreter(this, settings.allow_vision);
+                } catch (err) {
+                    console.warn(this.name, 'Viewer or vision interpreter failed to initialize:', err && err.message ? err.message : err);
+                    // continue without viewer - viewer is optional
+                }
+
+                // Initialize learning brain (non-blocking failures are fine)
+                try {
+                    const brainModule = await import('./learning/ultimate_brain.js');
+                    this.learningBrain = new brainModule.UltimateBotBrain(this.name);
+                    await this.learningBrain.initialize(this.bot);
+                    console.log(this.name, 'learning brain initialized');
+                } catch (err) {
+                    console.warn(this.name, 'failed to init learning brain:', err && err.message ? err.message : err);
+                }
 
                 // wait for a bit so stats are not undefined
                 await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -444,10 +468,52 @@ export class Agent {
         let prev_health = this.bot.health;
         this.bot.lastDamageTime = 0;
         this.bot.lastDamageTaken = 0;
+        this._autoDefendActive = false;
         this.bot.on('health', () => {
             if (this.bot.health < prev_health) {
                 this.bot.lastDamageTime = Date.now();
                 this.bot.lastDamageTaken = prev_health - this.bot.health;
+                // Trigger auto-defend only once per damage window
+                if (!this._autoDefendActive) {
+                    this._autoDefendActive = true;
+                    (async () => {
+                        try {
+                            // small delay to allow attacker entity to become visible in world
+                            await new Promise(r => setTimeout(r, 250));
+                            console.log(this.name, `auto-defend triggered: health ${prev_health} -> ${this.bot.health}, damage ${this.bot.lastDamageTaken}`);
+                            const defended = await defendSelf(this.bot, 12);
+                            console.log(this.name, 'auto-defend finished, defended=', defended);
+                            if (!defended) {
+                                // fallback: try to attack nearest hostile directly
+                                try {
+                                    const ents = Object.values(this.bot.entities || {});
+                                    let nearest = null;
+                                    let nearestDist = Infinity;
+                                    for (const e of ents) {
+                                        if (!e || !e.position || !e.type) continue;
+                                        if (e.id === this.bot.entity.id) continue;
+                                        // basic hostile name check (fallback)
+                                        const hostileNames = ['zombie','skeleton','creeper','spider','witch','drowned','hoglin','zombified_piglin','pillager','vindicator','evoker','phantom'];
+                                        if (hostileNames.includes((e.name||'').toLowerCase())) {
+                                            const d = this.bot.entity.position.distanceTo(e.position);
+                                            if (d < nearestDist && d <= 16) { nearest = e; nearestDist = d; }
+                                        }
+                                    }
+                                    if (nearest) {
+                                        console.log(this.name, 'fallback attacking nearest hostile', nearest.name, 'id', nearest.id);
+                                        try { this.bot.pvp.attack(nearest); } catch (e) { console.warn('fallback pvp attack failed', e); }
+                                    } else {
+                                        console.log(this.name, 'fallback: no nearby hostile found to attack');
+                                    }
+                                } catch (e) { console.warn(this.name, 'fallback attack error', e); }
+                            }
+                        } catch (err) {
+                            console.warn(this.name, 'auto-defend failed:', err && err.message ? err.message : err);
+                        } finally {
+                            this._autoDefendActive = false;
+                        }
+                    })();
+                }
             }
             prev_health = this.bot.health;
         });
@@ -535,14 +601,19 @@ export class Agent {
         process.exit(code);
     }
     async checkTaskDone() {
-        if (this.task.data) {
+        if (this.task && this.task.data) {
             let res = this.task.isDone();
-            if (res) {
+            // Only treat successful completion as final
+            if (res && res.message && res.message === 'Task successful') {
+                try { if (this.task && typeof this.task.clearSaved === 'function') this.task.clearSaved(); } catch(e){}
                 await this.history.add('system', `Task ended with score : ${res.score}`);
                 await this.history.save();
-                // await new Promise(resolve => setTimeout(resolve, 3000)); // Wait 3 second for save to complete
                 console.log('Task finished:', res.message);
                 this.killAll();
+            } else if (res) {
+                // Non-successful status (timeout, no other agents, etc.) -> log but keep task so it can continue
+                await this.history.add('system', `Task check returned: ${res.message || JSON.stringify(res)}`);
+                await this.history.save();
             }
         }
     }

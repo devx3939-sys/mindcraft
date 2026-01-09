@@ -1,0 +1,237 @@
+{
+  "timestamp": 1767925716020,
+  "session": {
+    "id": "e680aff93ce5d9a9dc1609746917adeb",
+    "startTime": 1767925652472,
+    "endTime": null,
+    "actions": [
+      {
+        "type": "training_stage",
+        "data": {
+          "stage": "sustain"
+        },
+        "time": 1767925652486
+      },
+      {
+        "type": "training_action",
+        "data": {
+          "stage": "sustain",
+          "success": true
+        },
+        "time": 1767925652486
+      },
+      {
+        "type": "training_stage",
+        "data": {
+          "stage": "wood_stone"
+        },
+        "time": 1767925682494
+      },
+      {
+        "type": "training_action",
+        "data": {
+          "stage": "wood_stone",
+          "success": false
+        },
+        "time": 1767925716020
+      }
+    ],
+    "movements": [],
+    "blocks": {
+      "placed": [],
+      "broken": [],
+      "interacted": []
+    },
+    "combat": {
+      "attacks": [],
+      "damageReceived": [],
+      "kills": [],
+      "deaths": []
+    },
+    "inventory": {
+      "pickups": [],
+      "drops": [],
+      "crafts": [],
+      "smelts": [],
+      "trades": [],
+      "snapshots": []
+    },
+    "world": {
+      "chunks": [],
+      "biomes": [],
+      "structures": [],
+      "discovered": []
+    },
+    "players": {
+      "seen": [],
+      "interactions": [],
+      "chat": [
+        {
+          "username": "Bot",
+          "message": "PvP mode - attacking ElementZ_X...",
+          "time": 1767925687738
+        }
+      ],
+      "trades": []
+    },
+    "entities": {
+      "seen": [],
+      "interactions": [],
+      "spawns": [],
+      "despawns": []
+    },
+    "environment": {
+      "weather": [],
+      "timeOfDay": [],
+      "position": [
+        {
+          "x": 49.120650535384264,
+          "y": 71.78608123157454,
+          "z": 82.80875324419834,
+          "time": 1767925662494
+        },
+        {
+          "x": 48.80755166443687,
+          "y": 70,
+          "z": 85.26805470973646,
+          "time": 1767925672493
+        },
+        {
+          "x": 48.3,
+          "y": 69,
+          "z": 84.64504523063864,
+          "time": 1767925682507
+        },
+        {
+          "x": 48.372599949907645,
+          "y": 70,
+          "z": 83.50000000000001,
+          "time": 1767925692515
+        },
+        {
+          "x": 45.47953843672273,
+          "y": 72.02442408821369,
+          "z": 85.00078461669688,
+          "time": 1767925702522
+        },
+        {
+          "x": 39.0897735835,
+          "y": 73,
+          "z": 78.7,
+          "time": 1767925712530
+        }
+      ]
+    },
+    "errors": [],
+    "failures": [],
+    "warnings": [],
+    "performance": {
+      "pvp": {
+        "wins": 0,
+        "losses": 0,
+        "damage": 0,
+        "accuracy": 0,
+        "score": 0
+      },
+      "mining": {
+        "blocks": 0,
+        "ores": 0,
+        "efficiency": 0,
+        "deaths": 0,
+        "score": 0
+      },
+      "crafting": {
+        "items": 0,
+        "recipes": 0,
+        "speed": 0,
+        "waste": 0,
+        "score": 0
+      },
+      "building": {
+        "placed": 0,
+        "structures": 0,
+        "quality": 0,
+        "time": 0,
+        "score": 0
+      },
+      "farming": {
+        "crops": 0,
+        "harvest": 0,
+        "yield": 0,
+        "automation": 0,
+        "score": 0
+      },
+      "breeding": {
+        "animals": 0,
+        "success": 0,
+        "efficiency": 0,
+        "score": 0
+      },
+      "trading": {
+        "trades": 0,
+        "profit": 0,
+        "efficiency": 0,
+        "score": 0
+      },
+      "survival": {
+        "time": 0,
+        "health": 0,
+        "food": 0,
+        "deaths": 0,
+        "score": 0
+      },
+      "exploration": {
+        "distance": 0,
+        "biomes": 0,
+        "structures": 0,
+        "score": 0
+      },
+      "navigation": {
+        "accuracy": 0,
+        "pathfinding": 0,
+        "obstacles": 0,
+        "score": 0
+      },
+      "overall": {
+        "score": 0,
+        "rank": "Beginner",
+        "sessions": 0
+      }
+    },
+    "stateSnapshots": [
+      {
+        "time": 1767925712498,
+        "health": 20,
+        "food": 18,
+        "position": {
+          "x": 38.901346344490634,
+          "y": 73,
+          "z": 78.7
+        },
+        "dimension": "overworld",
+        "inventory": [
+          {
+            "name": "oak_log",
+            "count": 31
+          },
+          {
+            "name": "oak_sapling",
+            "count": 2
+          }
+        ]
+      }
+    ]
+  },
+  "brain": {
+    "weights": {
+      "train:patrol": 0.0004269646674543691,
+      "train:hunt_animals": 0.00048209529020247537,
+      "train:smelt": 0.0006187021852855242,
+      "train:mine_stone": 0.0005651278731496521,
+      "train:fish": 0.0006417463377622893,
+      "train:collect_wood": 0.0006490191751619337,
+      "train_stage:sustain": null,
+      "train_stage:wood_stone": null
+    }
+  }
+}

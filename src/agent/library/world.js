@@ -405,9 +405,7 @@ export async function isClearPath(bot, target) {
      * @param {Entity} target - The target to path to.
      * @returns {boolean} - True if there is a clear path, false otherwise.
      */
-    let movements = new pf.Movements(bot)
-    movements.canDig = false;
-    movements.canPlaceOn = false;
+    let movements = (await import('./skills.js')).getOptimizedMovements(bot, { canDig: false, canPlaceOn: false });
     movements.canOpenDoors = false;
     let goal = new pf.goals.GoalNear(target.position.x, target.position.y, target.position.z, 1);
     let path = await bot.pathfinder.getPathTo(movements, goal, 100);

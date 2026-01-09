@@ -7,6 +7,23 @@ import settings from "../../../settings.js";
 const blockPlaceDelay = settings.block_place_delay == null ? 0 : settings.block_place_delay;
 const useDelay = blockPlaceDelay > 0;
 
+// Returns a Movements object tuned for faster, more fluid traversal.
+export function getOptimizedMovements(bot, opts = {}) {
+    const m = new pf.Movements(bot);
+    // default tuned options
+    m.digCost = opts.digCost ?? 6;
+    m.placeCost = opts.placeCost ?? 2;
+    m.allow1by1towers = opts.allow1by1towers ?? true;
+    m.allowParkour = opts.allowParkour ?? true;
+    m.canPlaceOn = opts.canPlaceOn ?? true;
+    m.canDig = opts.canDig ?? true;
+    m.allowDownhill = opts.allowDownhill ?? true;
+    // make the pathfinder prefer faster movement types
+    m.ladderCost = opts.ladderCost ?? 0.3;
+    m.blockBreakCost = opts.blockBreakCost ?? 4;
+    return m;
+}
+
 export function log(bot, message) {
     bot.output += message + '\n';
 }
@@ -351,18 +368,41 @@ export async function attackEntity(bot, entity, kill=true) {
         }
         console.log('attacking mob...')
         await bot.attack(entity);
+        return true;
     }
     else {
-        bot.pvp.attack(entity);
-        while (world.getNearbyEntities(bot, 24).includes(entity)) {
-            await new Promise(resolve => setTimeout(resolve, 1000));
+        // Use entity id to robustly track target even if objects change
+        const targetId = entity.id;
+        const chaseLimit = 64; // max pursuit distance
+        const attackRange = 2.5;
+        try {
+            bot.pvp.attack(entity);
+        } catch (e) { /* continue anyway */ }
+
+        // Keep pursuing until the target no longer exists, is dead, or we are interrupted
+        while (true) {
             if (bot.interrupt_code) {
-                bot.pvp.stop();
+                try { bot.pvp.stop(); } catch (e) {}
                 return false;
             }
+            const ent = bot.entities && bot.entities[targetId];
+            if (!ent) break; // target removed from world
+            // If target is far, try to pathfind closer
+            const dist = bot.entity.position.distanceTo(ent.position);
+            if (dist > attackRange && dist < chaseLimit) {
+                try {
+                    bot.pathfinder.setMovements(getOptimizedMovements(bot));
+                    await bot.pathfinder.goto(new pf.goals.GoalFollow(ent, 3.5), true);
+                } catch (err) { /* ignore path errors and retry */ }
+            }
+            // If target too far, break (give up)
+            if (dist >= chaseLimit) break;
+            // small pause while waiting for combat to resolve
+            await new Promise(resolve => setTimeout(resolve, 800));
         }
-        log(bot, `Successfully killed ${entity.name}.`);
-        await pickupNearbyItems(bot);
+
+        log(bot, `Finished engagement with ${entity.name || 'entity'}.`);
+        try { await pickupNearbyItems(bot); } catch (e) {}
         return true;
     }
 }
@@ -384,13 +424,13 @@ export async function defendSelf(bot, range=9) {
         await equipHighestAttack(bot);
         if (bot.entity.position.distanceTo(enemy.position) >= 4 && enemy.name !== 'creeper' && enemy.name !== 'phantom') {
             try {
-                bot.pathfinder.setMovements(new pf.Movements(bot));
+                bot.pathfinder.setMovements(getOptimizedMovements(bot));
                 await bot.pathfinder.goto(new pf.goals.GoalFollow(enemy, 3.5), true);
             } catch (err) {/* might error if entity dies, ignore */}
         }
         if (bot.entity.position.distanceTo(enemy.position) <= 2) {
             try {
-                bot.pathfinder.setMovements(new pf.Movements(bot));
+                bot.pathfinder.setMovements(getOptimizedMovements(bot));
                 let inverted_goal = new pf.goals.GoalInvert(new pf.goals.GoalFollow(enemy, 2));
                 await bot.pathfinder.goto(inverted_goal, true);
             } catch (err) {/* might error if entity dies, ignore */}
@@ -442,7 +482,7 @@ export async function collectBlock(bot, blockType, num=1, exclude=null) {
 
     let collected = 0;
 
-    const movements = new pf.Movements(bot);
+    const movements = getOptimizedMovements(bot, { canDig: true, allow1by1towers: true });
     movements.dontMineUnderFallingBlock = false;
     movements.dontCreateFlow = true;
 
@@ -541,7 +581,7 @@ export async function pickupNearbyItems(bot) {
     let nearestItem = getNearestItem(bot);
     let pickedUp = 0;
     while (nearestItem) {
-        let movements = new pf.Movements(bot);
+        let movements = getOptimizedMovements(bot, { canDig: false });
         movements.canDig = false;
         bot.pathfinder.setMovements(movements);
         await goToGoal(bot, new pf.goals.GoalFollow(nearestItem, 1));
@@ -583,7 +623,7 @@ export async function breakBlockAt(bot, x, y, z) {
 
         if (bot.entity.position.distanceTo(block.position) > 4.5) {
             let pos = block.position;
-            let movements = new pf.Movements(bot);
+            let movements = getOptimizedMovements(bot, { canPlaceOn: false, allow1by1towers: false });
             movements.canPlaceOn = false;
             movements.allow1by1towers = false;
             bot.pathfinder.setMovements(movements);
@@ -608,7 +648,7 @@ export async function breakBlockAt(bot, x, y, z) {
 }
 
 
-export async function placeBlock(bot, blockType, x, y, z, placeOn='bottom', dontCheat=false) {
+export async function placeBlock(bot, blockType, x, y, z, placeOn='bottom', dontCheat=false, scaffold=false) {
     /**
      * Place the given block type at the given position. It will build off from any adjacent blocks. Will fail if there is a block in the way or nothing to build off of.
      * @param {MinecraftBot} bot, reference to the minecraft bot.
@@ -746,8 +786,41 @@ export async function placeBlock(bot, blockType, x, y, z, placeOn='bottom', dont
         }
     }
     if (!buildOffBlock) {
-        log(bot, `Cannot place ${blockType} at ${targetBlock.position}: nothing to place on.`);
-        return false;
+        // Try to find a nearby support block below or adjacent to the target (scaffold strategy)
+        const searchDepth = 4;
+        const neighbors = [];
+        for (let dy = 0; dy <= searchDepth; dy++) {
+            for (let dx = -1; dx <= 1; dx++) {
+                for (let dz = -1; dz <= 1; dz++) {
+                    if (dx === 0 && dz === 0 && dy === 0) continue;
+                    neighbors.push(target_dest.plus(new Vec3(dx, -dy, dz)));
+                }
+            }
+        }
+        for (const posCheck of neighbors) {
+            const b = bot.blockAt(posCheck);
+            if (b && !empty_blocks.includes(b.name)) {
+                buildOffBlock = b;
+                faceVec = target_dest.minus(b.position);
+                break;
+            }
+        }
+        // If still no support and scaffolding allowed, attempt to build a foundation below target
+        if (!buildOffBlock && !scaffold) {
+            const below = target_dest.plus(new Vec3(0, -1, 0));
+            // try to place block below first (recursive scaffold attempt)
+            try {
+                const ok = await placeBlock(bot, blockType, below.x, below.y, below.z, 'bottom', dontCheat, true);
+                if (ok) {
+                    // after creating foundation, try placing original position again
+                    return await placeBlock(bot, blockType, x, y, z, placeOn, dontCheat, true);
+                }
+            } catch (e) { /* ignore scaffold failure */ }
+        }
+        if (!buildOffBlock) {
+            log(bot, `Cannot place ${blockType} at ${targetBlock.position}: nothing to place on.`);
+            return false;
+        }
     }
 
     const pos = bot.entity.position;
@@ -758,16 +831,26 @@ export async function placeBlock(bot, blockType, x, y, z, placeOn='bottom', dont
         // too close
         let goal = new pf.goals.GoalNear(targetBlock.position.x, targetBlock.position.y, targetBlock.position.z, 2);
         let inverted_goal = new pf.goals.GoalInvert(goal);
-        bot.pathfinder.setMovements(new pf.Movements(bot));
+        bot.pathfinder.setMovements(getOptimizedMovements(bot));
         await bot.pathfinder.goto(inverted_goal);
     }
     if (bot.entity.position.distanceTo(targetBlock.position) > 4.5) {
         // too far
         let pos = targetBlock.position;
-        let movements = new pf.Movements(bot);
+        let movements = getOptimizedMovements(bot);
         bot.pathfinder.setMovements(movements);
         await goToGoal(bot, new pf.goals.GoalNear(pos.x, pos.y, pos.z, 4));
     }
+
+    // If placing into liquid, try removing source first with a bucket
+    try {
+        if (targetBlock.name === 'water' || targetBlock.name === 'lava') {
+            const bucketItem = bot.inventory.items().find(i => i.name && i.name.includes('bucket'));
+            if (bucketItem) {
+                try { await useToolOnBlock(bot, 'bucket', targetBlock); } catch(e) { /* ignore */ }
+            }
+        }
+    } catch(e) { /* ignore */ }
 
     // will throw error if an entity is in the way, and sometimes even if the block was placed
     try {
@@ -1074,7 +1157,7 @@ export async function goToGoal(bot, goal) {
      * @param {pf.goals.Goal} goal, the goal to navigate to.
      **/
 
-    const nonDestructiveMovements = new pf.Movements(bot);
+    const nonDestructiveMovements = getOptimizedMovements(bot, { canDig: false, canPlaceOn: false, allow1by1towers: false });
     const dontBreakBlocks = ['glass', 'glass_pane'];
     for (let block of dontBreakBlocks) {
         nonDestructiveMovements.blocksCantBreak.add(mc.getBlockId(block));
@@ -1082,7 +1165,7 @@ export async function goToGoal(bot, goal) {
     nonDestructiveMovements.placeCost = 2;
     nonDestructiveMovements.digCost = 10;
 
-    const destructiveMovements = new pf.Movements(bot);
+    const destructiveMovements = getOptimizedMovements(bot, { canDig: true, allow1by1towers: true, allowParkour: true });
 
     let final_movements = destructiveMovements;
 
@@ -1341,8 +1424,7 @@ export async function followPlayer(bot, username, distance=4) {
     if (!player)
         return false;
 
-    const move = new pf.Movements(bot);
-    move.digCost = 10;
+    const move = getOptimizedMovements(bot, { digCost: 10 });
     bot.pathfinder.setMovements(move);
     let doorCheckInterval = startDoorInterval(bot);
 
@@ -1406,10 +1488,10 @@ export async function moveAway(bot, distance) {
     const pos = bot.entity.position;
     let goal = new pf.goals.GoalNear(pos.x, pos.y, pos.z, distance);
     let inverted_goal = new pf.goals.GoalInvert(goal);
-    bot.pathfinder.setMovements(new pf.Movements(bot));
+    bot.pathfinder.setMovements(getOptimizedMovements(bot));
 
     if (bot.modes.isOn('cheat')) {
-        const move = new pf.Movements(bot);
+        const move = getOptimizedMovements(bot);
         const path = await bot.pathfinder.getPathTo(move, inverted_goal, 10000);
         let last_move = path.path[path.path.length-1];
         if (last_move) {
@@ -1437,7 +1519,7 @@ export async function moveAwayFromEntity(bot, entity, distance=16) {
      **/
     let goal = new pf.goals.GoalFollow(entity, distance);
     let inverted_goal = new pf.goals.GoalInvert(goal);
-    bot.pathfinder.setMovements(new pf.Movements(bot));
+    bot.pathfinder.setMovements(getOptimizedMovements(bot));
     await bot.pathfinder.goto(inverted_goal);
     return true;
 }
@@ -1456,7 +1538,7 @@ export async function avoidEnemies(bot, distance=16) {
     while (enemy) {
         const follow = new pf.goals.GoalFollow(enemy, distance+1); // move a little further away
         const inverted_goal = new pf.goals.GoalInvert(follow);
-        bot.pathfinder.setMovements(new pf.Movements(bot));
+        bot.pathfinder.setMovements(getOptimizedMovements(bot));
         bot.pathfinder.setGoal(inverted_goal, true);
         await new Promise(resolve => setTimeout(resolve, 500));
         enemy = world.getNearestEntityWhere(bot, entity => mc.isHostile(entity), distance);
@@ -1620,7 +1702,7 @@ export async function tillAndSow(bot, x, y, z, seedType=null) {
     // if distance is too far, move to the block
     if (bot.entity.position.distanceTo(block.position) > 4.5) {
         let pos = block.position;
-        bot.pathfinder.setMovements(new pf.Movements(bot));
+        bot.pathfinder.setMovements(getOptimizedMovements(bot));
         await goToGoal(bot, new pf.goals.GoalNear(pos.x, pos.y, pos.z, 4));
     }
     if (block.name !== 'farmland') {
@@ -1665,7 +1747,7 @@ export async function activateNearestBlock(bot, type) {
     }
     if (bot.entity.position.distanceTo(block.position) > 4.5) {
         let pos = block.position;
-        bot.pathfinder.setMovements(new pf.Movements(bot));
+        bot.pathfinder.setMovements(getOptimizedMovements(bot));
         await goToGoal(bot, new pf.goals.GoalNear(pos.x, pos.y, pos.z, 4));
     }
     await bot.activateBlock(block);
@@ -2091,3 +2173,52 @@ export async function useToolOn(bot, toolName, targetName) {
     log(bot, `Used ${toolName} on ${block.name}.`);
     return true;
  }
+
+/**
+ * Plant crops at current location
+ * @param {MinecraftBot} bot - reference to the minecraft bot
+ * @param {string} cropType - type of crop to plant (wheat, carrots, potatoes, etc.)
+ */
+export async function plantCrop(bot, cropType) {
+    const seedName = cropType === 'wheat' ? 'wheat_seeds' : 
+                     cropType === 'carrots' ? 'carrot' :
+                     cropType === 'potatoes' ? 'potato' :
+                     cropType === 'melons' ? 'melon_seeds' :
+                     cropType === 'pumpkins' ? 'pumpkin_seeds' :
+                     cropType === 'nether_wart' ? 'nether_wart' :
+                     cropType + '_seeds';
+    
+    const pos = world.getNearestFreeSpace(bot, 1, 4);
+    if (!pos) {
+        log(bot, `No free space to plant ${cropType}`);
+        return false;
+    }
+    
+    await placeBlock(bot, seedName, pos.x, pos.y, pos.z);
+    return true;
+}
+
+/**
+ * Find and go to nearest entity of a specific type
+ * @param {MinecraftBot} bot - reference to the minecraft bot
+ * @param {string} entityType - type of entity to find
+ * @param {number} minDistance - minimum distance to get to entity
+ * @param {number} searchRange - range to search for entity
+ */
+// Note: Duplicate declaration removed - using existing goToNearestEntity at line 1274
+
+/**
+ * Show trades available from a specific villager
+ * @param {MinecraftBot} bot - reference to the minecraft bot
+ * @param {number} id - villager entity id
+ */
+// Note: Duplicate declaration removed - showVillagerTrades already exists at line 1748
+
+/**
+ * Trade with a specific villager
+ * @param {MinecraftBot} bot - reference to the minecraft bot
+ * @param {number} id - villager entity id
+ * @param {number} tradeIndex - index of trade (1-indexed)
+ * @param {number} count - number of times to execute the trade
+ */
+// Note: Duplicate declaration removed - tradeWithVillager already exists at line 1784

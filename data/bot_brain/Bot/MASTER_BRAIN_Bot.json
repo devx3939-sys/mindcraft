@@ -1,0 +1,17 @@
+{
+  "version": "evolved-1",
+  "botName": "Bot",
+  "timestamp": 1767924375523,
+  "neuralNetwork": {
+    "weights": {
+      "train:patrol": 0.22235096490784403,
+      "train:hunt_animals": 0.19835629341753405,
+      "train:smelt": 0.44706757477341047,
+      "train:mine_stone": 0.46204111785724145,
+      "train:fish": 0.49320596172657766,
+      "train:collect_wood": 0.26705060864270996,
+      "train_stage:sustain": 0.0001278110432880617,
+      "train_stage:wood_stone": 0.000034572409006000035
+    }
+  }
+}

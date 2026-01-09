@@ -65,8 +65,17 @@ if (process.env.LOG_ALL) {
 
 Mindcraft.init(true, settings.mindserver_port, settings.auto_open_ui);
 
-for (let profile of settings.profiles) {
-    const profile_json = JSON.parse(readFileSync(profile, 'utf8'));
-    settings.profile = profile_json;
-    Mindcraft.createAgent(settings);
+// Auto-start profiles only when explicitly enabled via env var AUTO_START_PROFILES=true
+if (process.env.AUTO_START_PROFILES === 'true') {
+    for (let profile of settings.profiles) {
+        try {
+            const profile_json = JSON.parse(readFileSync(profile, 'utf8'));
+            settings.profile = profile_json;
+            Mindcraft.createAgent(settings);
+        } catch (err) {
+            console.error('Failed to auto-start profile', profile, err);
+        }
+    }
+} else {
+    console.log('Auto-start of profiles is disabled. Set AUTO_START_PROFILES=true to enable.');
 }

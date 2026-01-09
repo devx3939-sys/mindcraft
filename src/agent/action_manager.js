@@ -89,6 +89,9 @@ export class ActionManager {
             }
             await this.stop();
 
+            // ensure bot has spawned before running actions so movement/pathfinder calls work
+            await this._waitForBotSpawn();
+
             // clear bot logs and reset interrupt code
             this.agent.clearBotLogs();
 
@@ -146,6 +149,17 @@ export class ActionManager {
                 this.agent.bot.emit('idle');
             }
             return { success: false, message, interrupted, timedout: false };
+        }
+    }
+
+    async _waitForBotSpawn(timeoutMs = 60000) {
+        const bot = () => this.agent && this.agent.bot;
+        const start = Date.now();
+        while ((!bot() || !bot().entity) && (Date.now() - start) < timeoutMs) {
+            await new Promise(r => setTimeout(r, 200));
+        }
+        if (!bot() || !bot().entity) {
+            console.warn('Bot did not spawn before action execution; proceeding anyway.');
         }
     }
 

@@ -57,7 +57,7 @@ export async function createAgent(settings) {
             console.warn(`Attempting to connect anyway...`);
         }
 
-        const agentProcess = new AgentProcess(agent_name, mindserver_port);
+        const agentProcess = new AgentProcess(agent_name, mindserver_port, settings);
         agentProcess.start(load_memory, init_message, agentIndex);
         agent_processes[settings.profile.name] = agentProcess;
     } catch (error) {

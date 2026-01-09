@@ -1,10 +1,47 @@
-import { readFileSync , writeFileSync, existsSync} from 'fs';
+import { readFileSync , writeFileSync, existsSync, unlinkSync } from 'fs';
+import fs from 'fs';
+import path from 'path';
 import { executeCommand } from '../commands/index.js';
 import { getPosition } from '../library/world.js';
 import { ConstructionTaskValidator, Blueprint } from './construction_tasks.js';
 import { CookingTaskInitiator } from './cooking_tasks.js';
 
 const PROGRESS_FILE = './hells_kitchen_progress.json';
+const TASKS_DIR = path.join(process.cwd(), 'data', 'tasks');
+
+function ensureTasksDir() {
+    try { fs.mkdirSync(TASKS_DIR, { recursive: true }); } catch(e) {}
+}
+
+function savedTaskPath(agentName) {
+    ensureTasksDir();
+    return path.join(TASKS_DIR, `${agentName}_task.json`);
+}
+
+function writeSavedTask(agentName, obj) {
+    try {
+        ensureTasksDir();
+        writeFileSync(savedTaskPath(agentName), JSON.stringify(obj, null, 2), 'utf8');
+    } catch (e) { console.error('Failed to write saved task for', agentName, e); }
+}
+
+function readSavedTask(agentName) {
+    try {
+        const p = savedTaskPath(agentName);
+        if (existsSync(p)) {
+            const raw = readFileSync(p, 'utf8');
+            return JSON.parse(raw);
+        }
+    } catch (e) { console.error('Failed to read saved task for', agentName, e); }
+    return null;
+}
+
+function clearSavedTask(agentName) {
+    try {
+        const p = savedTaskPath(agentName);
+        if (existsSync(p)) unlinkSync(p);
+    } catch (e) { console.error('Failed to clear saved task for', agentName, e); }
+}
 
 const hellsKitchenProgressManager = {
   readProgress: function() {
@@ -235,6 +272,15 @@ export class Task {
     constructor(agent, task_data, taskStartTime = null) {
         this.agent = agent;
         this.data = null;
+        // if no task_data provided, attempt to load persisted task
+        if (!task_data) {
+            const saved = readSavedTask(agent.name);
+            if (saved && saved.task_data) {
+                task_data = saved.task_data;
+                if (saved.taskStartTime) taskStartTime = saved.taskStartTime;
+                console.log(`Loaded persisted task for ${agent.name}`);
+            }
+        }
         if (taskStartTime !== null)
             this.taskStartTime = taskStartTime;
         else
@@ -295,6 +341,11 @@ export class Task {
         }
         else {
             console.log('No task.');
+        }
+
+        // persist the task state to disk so it can be resumed after death/respawn
+        if (this.data) {
+            try { this.saveState(); } catch(e) { console.error('Failed to persist task on start', e); }
         }
 
         this.name = this.agent.name;
@@ -403,6 +454,17 @@ export class Task {
             console.log(`Setting goal for agent ${this.agent.count_id}: ${agentGoal}`);
         }
         await executeCommand(this.agent, `!goal("${agentGoal}")`);
+    }
+
+    saveState() {
+        try {
+            const toSave = { task_data: this.data, taskStartTime: this.taskStartTime };
+            writeSavedTask(this.agent.name, toSave);
+        } catch (e) { console.error('Failed to save task state', e); }
+    }
+
+    clearSaved() {
+        try { clearSavedTask(this.agent.name); } catch(e) { console.error('Failed to clear saved task', e); }
     }
 
     async initBotTask() {

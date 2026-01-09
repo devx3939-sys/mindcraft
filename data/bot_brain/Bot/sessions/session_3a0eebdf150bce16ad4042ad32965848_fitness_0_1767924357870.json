@@ -1,0 +1,831 @@
+{
+  "id": "3a0eebdf150bce16ad4042ad32965848",
+  "timestamp": 1767922293821,
+  "fitness": 0,
+  "session": {
+    "actions": [
+      {
+        "type": "training_action",
+        "data": {
+          "action": "collect_wood",
+          "result": true
+        },
+        "time": 1767921683997
+      },
+      {
+        "type": "training_action",
+        "data": {
+          "action": "fish",
+          "result": true
+        },
+        "time": 1767921739404
+      },
+      {
+        "type": "training_action",
+        "data": {
+          "action": "smelt",
+          "result": false
+        },
+        "time": 1767921769416
+      },
+      {
+        "type": "training_action",
+        "data": {
+          "action": "collect_wood",
+          "result": true
+        },
+        "time": 1767921925802
+      },
+      {
+        "type": "training_action",
+        "data": {
+          "action": "hunt_animals",
+          "result": false
+        },
+        "time": 1767921955807
+      },
+      {
+        "type": "training_action",
+        "data": {
+          "action": "smelt",
+          "result": false
+        },
+        "time": 1767921985810
+      },
+      {
+        "type": "training_action",
+        "data": {
+          "action": "smelt",
+          "result": false
+        },
+        "time": 1767922015816
+      },
+      {
+        "type": "training_action",
+        "data": {
+          "action": "mine_stone",
+          "result": false
+        },
+        "time": 1767922045847
+      },
+      {
+        "type": "spawn",
+        "data": {
+          "position": {
+            "x": 45.045913206560556,
+            "y": 73,
+            "z": 79.49999999999956
+          },
+          "dimension": "overworld"
+        },
+        "time": 1767922064201
+      },
+      {
+        "type": "spawn",
+        "data": {
+          "position": {
+            "x": 46.5,
+            "y": 73,
+            "z": 74.5
+          },
+          "dimension": "overworld"
+        },
+        "time": 1767922093626
+      },
+      {
+        "type": "training_action",
+        "data": {
+          "action": "fish",
+          "result": true
+        },
+        "time": 1767922099275
+      },
+      {
+        "type": "training_action",
+        "data": {
+          "action": "mine_stone",
+          "result": false
+        },
+        "time": 1767922129325
+      },
+      {
+        "type": "spawn",
+        "data": {
+          "position": {
+            "x": 51.5,
+            "y": 72,
+            "z": 70.5
+          },
+          "dimension": "overworld"
+        },
+        "time": 1767922140981
+      },
+      {
+        "type": "training_action",
+        "data": {
+          "action": "collect_wood",
+          "result": true
+        },
+        "time": 1767922202276
+      },
+      {
+        "type": "training_action",
+        "data": {
+          "action": "hunt_animals",
+          "result": false
+        },
+        "time": 1767922232294
+      },
+      {
+        "type": "training_action",
+        "data": {
+          "action": "fish",
+          "result": true
+        },
+        "time": 1767922284676
+      }
+    ],
+    "stateSnapshots": [
+      {
+        "time": 1767921704697,
+        "health": 18.833332061767578,
+        "food": 17,
+        "position": {
+          "x": 54.64365986078172,
+          "y": 73,
+          "z": 94.38096778485608
+        },
+        "dimension": "overworld",
+        "inventory": [
+          {
+            "name": "oak_log",
+            "count": 7
+          }
+        ]
+      },
+      {
+        "time": 1767921764696,
+        "health": 18.833332061767578,
+        "food": 16,
+        "position": {
+          "x": 63.5,
+          "y": 70,
+          "z": 84.50000000000007
+        },
+        "dimension": "overworld",
+        "inventory": [
+          {
+            "name": "oak_log",
+            "count": 7
+          },
+          {
+            "name": "dirt",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "time": 1767921824701,
+        "health": 18.833332061767578,
+        "food": 15,
+        "position": {
+          "x": 62.5,
+          "y": 73,
+          "z": 82.47244148331538
+        },
+        "dimension": "overworld",
+        "inventory": [
+          {
+            "name": "oak_log",
+            "count": 7
+          },
+          {
+            "name": "dirt",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "time": 1767921884702,
+        "health": 18.833332061767578,
+        "food": 14,
+        "position": {
+          "x": 53.80077651836336,
+          "y": 72.24918707874468,
+          "z": 73.3
+        },
+        "dimension": "overworld",
+        "inventory": [
+          {
+            "name": "oak_log",
+            "count": 12
+          },
+          {
+            "name": "dirt",
+            "count": 2
+          },
+          {
+            "name": "oak_sapling",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "time": 1767921944703,
+        "health": 13.833332061767578,
+        "food": 13,
+        "position": {
+          "x": 69.4724405419465,
+          "y": 75,
+          "z": 65.66092656824365
+        },
+        "dimension": "overworld",
+        "inventory": [
+          {
+            "name": "oak_log",
+            "count": 18
+          },
+          {
+            "name": "oak_sapling",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "time": 1767922004703,
+        "health": 13.833332061767578,
+        "food": 13,
+        "position": {
+          "x": 69.4724405419465,
+          "y": 75,
+          "z": 65.66092656824365
+        },
+        "dimension": "overworld",
+        "inventory": [
+          {
+            "name": "oak_log",
+            "count": 18
+          },
+          {
+            "name": "oak_sapling",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "time": 1767921704697,
+        "health": 18.833332061767578,
+        "food": 17,
+        "position": {
+          "x": 54.64365986078172,
+          "y": 73,
+          "z": 94.38096778485608
+        },
+        "dimension": "overworld",
+        "inventory": [
+          {
+            "name": "oak_log",
+            "count": 7
+          }
+        ]
+      },
+      {
+        "time": 1767921764696,
+        "health": 18.833332061767578,
+        "food": 16,
+        "position": {
+          "x": 63.5,
+          "y": 70,
+          "z": 84.50000000000007
+        },
+        "dimension": "overworld",
+        "inventory": [
+          {
+            "name": "oak_log",
+            "count": 7
+          },
+          {
+            "name": "dirt",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "time": 1767921824701,
+        "health": 18.833332061767578,
+        "food": 15,
+        "position": {
+          "x": 62.5,
+          "y": 73,
+          "z": 82.47244148331538
+        },
+        "dimension": "overworld",
+        "inventory": [
+          {
+            "name": "oak_log",
+            "count": 7
+          },
+          {
+            "name": "dirt",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "time": 1767921884702,
+        "health": 18.833332061767578,
+        "food": 14,
+        "position": {
+          "x": 53.80077651836336,
+          "y": 72.24918707874468,
+          "z": 73.3
+        },
+        "dimension": "overworld",
+        "inventory": [
+          {
+            "name": "oak_log",
+            "count": 12
+          },
+          {
+            "name": "dirt",
+            "count": 2
+          },
+          {
+            "name": "oak_sapling",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "time": 1767921944703,
+        "health": 13.833332061767578,
+        "food": 13,
+        "position": {
+          "x": 69.4724405419465,
+          "y": 75,
+          "z": 65.66092656824365
+        },
+        "dimension": "overworld",
+        "inventory": [
+          {
+            "name": "oak_log",
+            "count": 18
+          },
+          {
+            "name": "oak_sapling",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "time": 1767922004703,
+        "health": 13.833332061767578,
+        "food": 13,
+        "position": {
+          "x": 69.4724405419465,
+          "y": 75,
+          "z": 65.66092656824365
+        },
+        "dimension": "overworld",
+        "inventory": [
+          {
+            "name": "oak_log",
+            "count": 18
+          },
+          {
+            "name": "oak_sapling",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "time": 1767922064201,
+        "health": 20,
+        "food": 20,
+        "position": {
+          "x": 45.045913206560556,
+          "y": 73,
+          "z": 79.49999999999956
+        },
+        "dimension": "overworld",
+        "inventory": []
+      },
+      {
+        "time": 1767922064732,
+        "health": 20,
+        "food": 20,
+        "position": {
+          "x": 47.762411129983654,
+          "y": 72.41999998688698,
+          "z": 79.49999999999919
+        },
+        "dimension": "overworld",
+        "inventory": []
+      },
+      {
+        "time": 1767921704697,
+        "health": 18.833332061767578,
+        "food": 17,
+        "position": {
+          "x": 54.64365986078172,
+          "y": 73,
+          "z": 94.38096778485608
+        },
+        "dimension": "overworld",
+        "inventory": [
+          {
+            "name": "oak_log",
+            "count": 7
+          }
+        ]
+      },
+      {
+        "time": 1767921764696,
+        "health": 18.833332061767578,
+        "food": 16,
+        "position": {
+          "x": 63.5,
+          "y": 70,
+          "z": 84.50000000000007
+        },
+        "dimension": "overworld",
+        "inventory": [
+          {
+            "name": "oak_log",
+            "count": 7
+          },
+          {
+            "name": "dirt",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "time": 1767921824701,
+        "health": 18.833332061767578,
+        "food": 15,
+        "position": {
+          "x": 62.5,
+          "y": 73,
+          "z": 82.47244148331538
+        },
+        "dimension": "overworld",
+        "inventory": [
+          {
+            "name": "oak_log",
+            "count": 7
+          },
+          {
+            "name": "dirt",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "time": 1767921884702,
+        "health": 18.833332061767578,
+        "food": 14,
+        "position": {
+          "x": 53.80077651836336,
+          "y": 72.24918707874468,
+          "z": 73.3
+        },
+        "dimension": "overworld",
+        "inventory": [
+          {
+            "name": "oak_log",
+            "count": 12
+          },
+          {
+            "name": "dirt",
+            "count": 2
+          },
+          {
+            "name": "oak_sapling",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "time": 1767921944703,
+        "health": 13.833332061767578,
+        "food": 13,
+        "position": {
+          "x": 69.4724405419465,
+          "y": 75,
+          "z": 65.66092656824365
+        },
+        "dimension": "overworld",
+        "inventory": [
+          {
+            "name": "oak_log",
+            "count": 18
+          },
+          {
+            "name": "oak_sapling",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "time": 1767922004703,
+        "health": 13.833332061767578,
+        "food": 13,
+        "position": {
+          "x": 69.4724405419465,
+          "y": 75,
+          "z": 65.66092656824365
+        },
+        "dimension": "overworld",
+        "inventory": [
+          {
+            "name": "oak_log",
+            "count": 18
+          },
+          {
+            "name": "oak_sapling",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "time": 1767922064201,
+        "health": 20,
+        "food": 20,
+        "position": {
+          "x": 45.045913206560556,
+          "y": 73,
+          "z": 79.49999999999956
+        },
+        "dimension": "overworld",
+        "inventory": []
+      },
+      {
+        "time": 1767922064732,
+        "health": 20,
+        "food": 20,
+        "position": {
+          "x": 47.762411129983654,
+          "y": 72.41999998688698,
+          "z": 79.49999999999919
+        },
+        "dimension": "overworld",
+        "inventory": []
+      },
+      {
+        "time": 1767922093626,
+        "health": 20,
+        "food": 20,
+        "position": {
+          "x": 46.5,
+          "y": 73,
+          "z": 74.5
+        },
+        "dimension": "overworld",
+        "inventory": []
+      },
+      {
+        "time": 1767922124736,
+        "health": 20,
+        "food": 20,
+        "position": {
+          "x": 46.5,
+          "y": 73,
+          "z": 74.5
+        },
+        "dimension": "overworld",
+        "inventory": []
+      },
+      {
+        "time": 1767921704697,
+        "health": 18.833332061767578,
+        "food": 17,
+        "position": {
+          "x": 54.64365986078172,
+          "y": 73,
+          "z": 94.38096778485608
+        },
+        "dimension": "overworld",
+        "inventory": [
+          {
+            "name": "oak_log",
+            "count": 7
+          }
+        ]
+      },
+      {
+        "time": 1767921764696,
+        "health": 18.833332061767578,
+        "food": 16,
+        "position": {
+          "x": 63.5,
+          "y": 70,
+          "z": 84.50000000000007
+        },
+        "dimension": "overworld",
+        "inventory": [
+          {
+            "name": "oak_log",
+            "count": 7
+          },
+          {
+            "name": "dirt",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "time": 1767921824701,
+        "health": 18.833332061767578,
+        "food": 15,
+        "position": {
+          "x": 62.5,
+          "y": 73,
+          "z": 82.47244148331538
+        },
+        "dimension": "overworld",
+        "inventory": [
+          {
+            "name": "oak_log",
+            "count": 7
+          },
+          {
+            "name": "dirt",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "time": 1767921884702,
+        "health": 18.833332061767578,
+        "food": 14,
+        "position": {
+          "x": 53.80077651836336,
+          "y": 72.24918707874468,
+          "z": 73.3
+        },
+        "dimension": "overworld",
+        "inventory": [
+          {
+            "name": "oak_log",
+            "count": 12
+          },
+          {
+            "name": "dirt",
+            "count": 2
+          },
+          {
+            "name": "oak_sapling",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "time": 1767921944703,
+        "health": 13.833332061767578,
+        "food": 13,
+        "position": {
+          "x": 69.4724405419465,
+          "y": 75,
+          "z": 65.66092656824365
+        },
+        "dimension": "overworld",
+        "inventory": [
+          {
+            "name": "oak_log",
+            "count": 18
+          },
+          {
+            "name": "oak_sapling",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "time": 1767922004703,
+        "health": 13.833332061767578,
+        "food": 13,
+        "position": {
+          "x": 69.4724405419465,
+          "y": 75,
+          "z": 65.66092656824365
+        },
+        "dimension": "overworld",
+        "inventory": [
+          {
+            "name": "oak_log",
+            "count": 18
+          },
+          {
+            "name": "oak_sapling",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "time": 1767922064201,
+        "health": 20,
+        "food": 20,
+        "position": {
+          "x": 45.045913206560556,
+          "y": 73,
+          "z": 79.49999999999956
+        },
+        "dimension": "overworld",
+        "inventory": []
+      },
+      {
+        "time": 1767922064732,
+        "health": 20,
+        "food": 20,
+        "position": {
+          "x": 47.762411129983654,
+          "y": 72.41999998688698,
+          "z": 79.49999999999919
+        },
+        "dimension": "overworld",
+        "inventory": []
+      },
+      {
+        "time": 1767922093626,
+        "health": 20,
+        "food": 20,
+        "position": {
+          "x": 46.5,
+          "y": 73,
+          "z": 74.5
+        },
+        "dimension": "overworld",
+        "inventory": []
+      },
+      {
+        "time": 1767922124736,
+        "health": 20,
+        "food": 20,
+        "position": {
+          "x": 46.5,
+          "y": 73,
+          "z": 74.5
+        },
+        "dimension": "overworld",
+        "inventory": []
+      },
+      {
+        "time": 1767922140981,
+        "health": 20,
+        "food": 20,
+        "position": {
+          "x": 51.5,
+          "y": 72,
+          "z": 70.5
+        },
+        "dimension": "overworld",
+        "inventory": []
+      },
+      {
+        "time": 1767922184745,
+        "health": 20,
+        "food": 20,
+        "position": {
+          "x": 46.685021454552626,
+          "y": 75,
+          "z": 60.499483854402435
+        },
+        "dimension": "overworld",
+        "inventory": [
+          {
+            "name": "oak_log",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "time": 1767922244755,
+        "health": 20,
+        "food": 20,
+        "position": {
+          "x": 46.5,
+          "y": 72,
+          "z": 57.531771952559296
+        },
+        "dimension": "overworld",
+        "inventory": [
+          {
+            "name": "oak_log",
+            "count": 8
+          }
+        ]
+      }
+    ]
+  },
+  "brain": {
+    "weights": {
+      "train:patrol": 0.00010563261811628792,
+      "train:hunt_animals": 0.14171150310299277,
+      "train:smelt": 0.4799672270276539,
+      "train:mine_stone": 0.2077129211114359,
+      "train:fish": 0.2827348569793347,
+      "train:collect_wood": 0.5158747049845469
+    }
+  }
+}
